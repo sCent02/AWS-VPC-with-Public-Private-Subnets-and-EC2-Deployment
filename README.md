@@ -5,6 +5,7 @@ Note:
 I will also demonstrate the equivalent AWS Console of each HCL Block to make more sense on how I build a VPC.
 
 # Architecture
+![Architecture Diagram](static/Architecture.png)
 
 **Components:**
 - **VPC** (`10.0.0.0/16`)

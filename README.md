@@ -34,3 +34,7 @@ terraform output ec2_public_ip
 Restrict SSH access by editing the Security Group ingress rules.
 
 Use your own AWS key pair name in variables.tf.
+
+
+Step #1: Create VPC
+![VPC](static/1_Create_VPC.jpg)

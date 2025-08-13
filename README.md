@@ -3,3 +3,28 @@ This project provisions an AWS Virtual Private Cloud (VPC) with both **public an
 
 Note:
 I will also demonstrate the equivalent AWS Console of each HCL Block to make more sense on how I build a VPC.
+
+# Architecture
+
+**Components:**
+- **VPC** (`10.0.0.0/16`)
+- **Public Subnet** (`10.0.1.0/24`) → EC2 instance
+- **Private Subnet** (`10.0.2.0/24`)
+- **Internet Gateway** for public access
+- **NAT Gateway** for private subnet outbound internet
+- **Security Groups** allowing HTTP(80) & SSH(22)
+- **Terraform** for infrastructure as code
+
+## ⚙️ How to Deploy
+```bash
+# 1️⃣ Initialize Terraform
+terraform init
+
+# 2️⃣ Review the plan
+terraform plan
+
+# 3️⃣ Apply configuration
+terraform apply -auto-approve
+
+# 4️⃣ Get EC2 IP
+terraform output ec2_public_ip

@@ -37,4 +37,5 @@ Use your own AWS key pair name in variables.tf.
 
 
 Step #1: Create VPC
-![Create_VPC](static/Create_VPC.png)
+
+![Create VPC](static/Create_VPC.png)

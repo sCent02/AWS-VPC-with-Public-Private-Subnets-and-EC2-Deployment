@@ -41,4 +41,14 @@ Use your own AWS key pair name in variables.tf.
 Step #1: Create VPC
 ![Create VPC](static/CreateVPC.png)
 
+Equivalent HCL Code:
+```bash
+resource "aws_vpc" "main" {
+  cidr_block = var.vpc_cidr # 10.0.0.0/16
+  tags = {
+    Name = "${var.project_name}-vpc" # vpc-portfolio
+  }
+}
+```
+
 

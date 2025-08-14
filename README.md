@@ -42,12 +42,25 @@ Step #1: Create VPC
 ![Create VPC](static/CreateVPC.png)
 
 Equivalent HCL Code:
+(from main.tf)
 ```hcl
+# 1. Create VPC
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr # 10.0.0.0/16
   tags = {
     Name = "${var.project_name}-vpc" # vpc-portfolio
   }
+}
+```
+
+(from variables.tf)
+```hcl
+variable "project_name" {
+  default = "my-portfolio"
+}
+
+variable "vpc_cidr" {
+  default = "10.0.0.0/16"
 }
 ```
 

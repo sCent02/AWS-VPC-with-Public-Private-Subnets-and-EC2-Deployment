@@ -16,6 +16,7 @@ I will also demonstrate the equivalent AWS Console of each HCL Block to make mor
 - **Security Groups** allowing HTTP(80) & SSH(22)
 - **Terraform** for infrastructure as code
 
+
 ## ⚙️ How to Deploy
 ```bash
 # 1️⃣ Initialize Terraform
@@ -29,6 +30,7 @@ terraform apply -auto-approve
 
 # 4️⃣ Get EC2 IP
 terraform output ec2_public_ip
+```
 
 🛡 Security Notes
 Restrict SSH access by editing the Security Group ingress rules.
@@ -37,6 +39,6 @@ Use your own AWS key pair name in variables.tf.
 
 
 Step #1: Create VPC
-
 ![Create VPC](static/CreateVPC.png)
+
 

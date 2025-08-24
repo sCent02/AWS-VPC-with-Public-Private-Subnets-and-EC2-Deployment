@@ -37,11 +37,39 @@ Restrict SSH access by editing the Security Group ingress rules.
 
 Use your own AWS key pair name in variables.tf.
 
+Here's my variables you can prefer later on:
+```hcl
+variable "project_name" {
+  default = "v-portfolio"
+}
+
+variable "vpc_cidr" {
+  default = "10.0.0.0/16"
+}
+
+variable "public_subnet_cidr" {
+  default = "10.0.0.0/24"
+}
+
+variable "private_subnet_cidr" {
+  default = "10.0.2.0/24"
+}
+
+variable "instance_type" {
+  default = "t3.small"
+}
+
+variable "key_name" {
+  description = "Existing AWS key pair name for SSH"
+  default     = "my-key" 
+}
+```
+
 
 Step #1: Create VPC
-![Create VPC](static/CreateVPC.png)
+![Create VPC](image/CreateVPC.png)
 
-Equivalent HCL Code: \n
+Equivalent HCL Code: 
 (from main.tf)
 ```hcl
 # 1. Create VPC
@@ -53,15 +81,32 @@ resource "aws_vpc" "main" {
 }
 ```
 
-(from variables.tf)
+Step #2: Create Public and Private Subnet
+![Create Public/Private Subnet](image/PrivateSubnet.PNG)
+
+Equivalent HCL Code:
+(from main.tf)
 ```hcl
-variable "project_name" {
-  default = "v-portfolio"
+# 2. Create Public and Private Subnet
+resource "aws_subnet" "public" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = var.public_subnet_cidr
+  map_public_ip_on_launch = true
+  availability_zone       = "ap-southeast-1a" # Change as needed
+  tags = {
+    Name = "${var.project_name}-public-subnet"
+  }
 }
 
-variable "vpc_cidr" {
-  default = "10.0.0.0/16"
+
+resource "aws_subnet" "private" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.private_subnet_cidr
+  availability_zone = "ap-southeast-1a"
+  tags = {
+    Name = "${var.project_name}-private-subnet"
+  }
 }
 ```
 
-
+Step #3: Create Internet Gateway

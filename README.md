@@ -111,3 +111,14 @@ resource "aws_subnet" "private" {
 
 Step #3: Create Internet Gateway
 ![CreateInternetGateway](image/InternetGateway.png)
+
+Equivalent HCL Code:
+```hcl
+# 3. Create Internet Gateway
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+  tags = {
+    Name = "${var.project_name}-igw"
+  }
+}
+```

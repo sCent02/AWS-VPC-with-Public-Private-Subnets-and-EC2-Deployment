@@ -122,3 +122,34 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 ```
+
+Step #4: Create Public Route Table
+![CreatePublicRouteTable](image/PublicRTB.png)
+
+Edit subnet associate and we should associate the public subnet
+![PublicRTBAssoc](image/PublicRTBAssoc.png)
+
+Edit route and this should include a publoc routing so we can access the virtual machine later on.
+![PublicRTBRouting](image/PublicRTBRouting.png)
+
+Equivalent HCL Code:
+```hcl
+# 4. Create Public Route Table
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
+  tags = {
+    Name = "${var.project_name}-public-rt"
+  }
+}
+
+resource "aws_route" "public_internet_access" {
+  route_table_id         = aws_route_table.public.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.igw.id
+}
+
+resource "aws_route_table_association" "public_assoc" {
+  subnet_id      = aws_subnet.public.id
+  route_table_id = aws_route_table.public.id
+}
+```

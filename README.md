@@ -2,15 +2,15 @@
 This project provisions an AWS Virtual Private Cloud (VPC) with both **public and private subnets** using Terraform. An **EC2 instance** is deployed in the public subnet and automatically configured with Nginx to serve a simple web page. The private subnet is internet-enabled through a **NAT Gateway** for secure backend services.
 
 Note:
-I will also demonstrate the equivalent AWS Console of each HCL Block to make more sense on how I build a VPC.
+I will also demonstrate the equivalent AWS Console of each HCL Block to make more sense on how I build a VPC. Please take note that we will start with the Phase 1 architectural diagram to demonstrate the baby steps on how to provision a VPC with a built in security group.
 
 # Architecture
 ![Architecture Diagram](image/UpdatedArchitecture.png)
 
 **Components:**
 - **VPC** (`10.0.0.0/16`)
-- **Public Subnet** (`10.0.1.0/24`) → EC2 instance
-- **Private Subnet** (`10.0.2.0/24`)
+- **Public Subnet** (`10.0.0.0/24`) → EC2 instance
+- **Private Subnet** (`10.0.1.0/24`)
 - **Internet Gateway** for public access
 - **NAT Gateway** for private subnet outbound internet
 - **Security Groups** allowing HTTP(80) & SSH(22)
@@ -52,7 +52,7 @@ variable "public_subnet_cidr" {
 }
 
 variable "private_subnet_cidr" {
-  default = "10.0.2.0/24"
+  default = "10.0.1.0/24"
 }
 
 variable "instance_type" {
@@ -61,7 +61,7 @@ variable "instance_type" {
 
 variable "key_name" {
   description = "Existing AWS key pair name for SSH"
-  default     = "my-key" 
+  default     = "T-Windows"  # Put your own .pem file
 }
 ```
 

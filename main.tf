@@ -104,7 +104,7 @@ resource "aws_security_group" "web_sg" {
 # Updated block of code for best practice purposes
 resource "aws_vpc_security_group_ingress_rule" "allow_ssh" {
   security_group_id = aws_security_group.web_sg.id
-  cidr_ipv4         = "0.0.0.0/0"
+  cidr_ipv4         = aws_vpc.main.cidr_block
   from_port         = 22
   ip_protocol       = "tcp"
   to_port           = 22
@@ -132,6 +132,7 @@ resource "aws_instance" "web" {
   ami                    = "ami-0061376a80017c383" # Amazon Linux 2023 in ap-southeast-1
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.public.id
+  availability_zone = "ap-southeast-1a"
   vpc_security_group_ids = [aws_security_group.web_sg.id]
   key_name               = var.key_name
   user_data              = file("userdata.sh")

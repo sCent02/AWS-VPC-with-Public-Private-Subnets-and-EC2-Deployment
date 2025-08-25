@@ -111,3 +111,4 @@ resource "aws_subnet" "private" {
 
 Step #3: Create Internet Gateway
 
+![Create Internet Gateway](image/InternetGateway.PNG)

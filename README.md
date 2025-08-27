@@ -233,14 +233,14 @@ echo "<h1>VPC Portfolio Project Running on EC2</h1>" > /usr/share/nginx/html/ind
 ```
 
 Finally, we can now run the terraform apply command in out shell:
-![ShellOutput]{image/ShellOutput.PNG}
+![ShellOutput](image/ShellOutput.PNG)
 
 To verify if our EC2 Instance is Live,  we can access out public IP Output in any web browsser. As shown below, it is running
-![WebPageTest]{image/WebPageTest.PNG}
+![WebPageTest](image/WebPageTest.PNG)
 
 
 For our safety and to avoid unexpected charges from our AWS Accout. We sould keep in mind to use terraform destroy to terminate the resources that we recently build.
-![TerraformDestroy]{image/TerraformDestroy.PNG}
+![TerraformDestroy](image/TerraformDestroy.PNG)
 
 
 This is the end of my Phase 1 project. I hope you appreciate my step by step on building my first terraform project.

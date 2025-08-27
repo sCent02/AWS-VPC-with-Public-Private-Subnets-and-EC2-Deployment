@@ -200,3 +200,47 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_outbound" {
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
 ```
+
+Final Step: Launch EC2 Public Instance
+
+Equivalent HCL Clod:
+```hcl
+# 1. EC2 Instance
+resource "aws_instance" "web" {
+  ami                    = "ami-0061376a80017c383" # Amazon Linux 2023 in ap-southeast-1
+  instance_type          = var.instance_type
+  subnet_id              = aws_subnet.public.id
+  availability_zone = "ap-southeast-1a"
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
+  key_name               = var.key_name
+  user_data              = file("userdata.sh")
+
+  tags = {
+    Name = "${var.project_name}-ec2"
+  }
+}
+```
+
+Inside the userdata.sh:
+```shell
+#!/bin/bash
+yum update -y
+amazon-linux-extras enable nginx1
+yum install -y nginx
+systemctl start nginx
+systemctl enable nginx
+echo "<h1>VPC Portfolio Project Running on EC2</h1>" > /usr/share/nginx/html/index.html
+```
+
+Finally, we can now run the terraform apply command in out shell:
+![ShellOutput]{image/ShellOutput.PNG}
+
+To verify if our EC2 Instance is Live,  we can access out public IP Output in any web browsser. As shown below, it is running
+![WebPageTest]{image/WebPageTest.PNG}
+
+
+For our safety and to avoid unexpected charges from our AWS Accout. We sould keep in mind to use terraform destroy to terminate the resources that we recently build.
+![TerraformDestroy]{image/TerraformDestroy.PNG}
+
+
+This is the end of my Phase 1 project. I hope you appreciate my step by step on building my first terraform project.

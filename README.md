@@ -157,6 +157,9 @@ resource "aws_route_table_association" "public_assoc" {
 Step #5: Create security groups for inbound and outbound traffic control.
 ![SecurityGroup](image/SecurityGroups.PNG)
 
+Equivalent HCL Code:
+(from SecurityGroups.tf)
+
 ```hcl
 # 2. Security Group
 resource "aws_security_group" "web_sg" {
@@ -203,7 +206,9 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_outbound" {
 
 Final Step: Launch EC2 Public Instance
 
-Equivalent HCL Clod:
+Equivalent HCL Code:
+(from public_ec2.tf)
+
 ```hcl
 # 1. EC2 Instance
 resource "aws_instance" "web" {
@@ -221,7 +226,8 @@ resource "aws_instance" "web" {
 }
 ```
 
-Inside the userdata.sh:
+Inside of userdata.sh:
+
 ```shell
 #!/bin/bash
 yum update -y

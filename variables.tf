@@ -20,5 +20,5 @@ variable "instance_type" {
 
 variable "key_name" {
   description = "Existing AWS key pair name for SSH"
-  default     = "T-Windows"  # Put your own .pem file
+  default     = ""  # Put your own .pem file
 }

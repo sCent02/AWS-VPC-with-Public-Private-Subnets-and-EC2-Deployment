@@ -22,24 +22,33 @@ I will also demonstrate the equivalent AWS Console of each HCL Block to make mor
 
 ### 4. Deployment Instructions
 ## ⚙️ How to Deploy
+
+1. Clone this repository
 ```bash
-# 1️⃣ Initialize Terraform
-terraform init
-
-# 2️⃣ Review the plan
-terraform plan
-
-# 3️⃣ Apply configuration
-terraform apply -auto-approve
-
-# 4️⃣ Get EC2 IP
-terraform output ec2_public_ip
+git clone https://github.com/sCent02/AWS-VPC-with-Public-Private-Subnets-and-EC2-Deployment
+cd AWS-VPC-with-Public-Private-Subnets-and-EC2-Deployment
 ```
+
+2. Initialize Terraform
+`terraform init`
+
+3. Preview resources
+`terraform plan`
+
+4. Apply configuration
+`terraform apply`
+
+5. Get EC2 IP
+`terraform output ec2_public_ip`
+
+6. Destroy resources when done
+`terraform destroy`
+
 
 🛡 Security Notes
 Restrict SSH access by editing the Security Group ingress rules.
 
-Use your own AWS key pair name in variables.tf.
+Use your own AWS key pair name in `variables.tf`.
 
 Here's my variables you can prefer later on:
 ```hcl
@@ -81,7 +90,7 @@ Step #1: Create VPC
 ![Create VPC](image/CreateVPC.png)
 
 Equivalent HCL Code: 
-(from VPC.tf)
+(from `VPC.tf`)
 ```hcl
 # 1. Create VPC
 resource "aws_vpc" "main" {
@@ -96,7 +105,7 @@ Step #2: Create Public and Private Subnet
 ![Create Public/Private Subnet](image/PrivateSubnet.PNG)
 
 Equivalent HCL Code:
-(from VPC.tf)
+(from `VPC.tf`)
 ```hcl
 # 2. Create Public and Private Subnet
 resource "aws_subnet" "public" {
@@ -124,7 +133,7 @@ Step #3: Create Internet Gateway
 ![CreateInternetGateway](image/InternetGateway.png)
 
 Equivalent HCL Code:
-(from VPC.tf)
+(from `VPC.tf`)
 ```hcl
 # 3. Create Internet Gateway
 resource "aws_internet_gateway" "igw" {
@@ -145,7 +154,7 @@ Edit route and this should include a public routing so we can access the virtual
 ![PublicRTBRouting](image/PublicRTBRouting.png)
 
 Equivalent HCL Code:
-(from VPC.tf)
+(from `VPC.tf`)
 ```hcl
 # 4. Create Public Route Table
 resource "aws_route_table" "public" {
@@ -174,7 +183,7 @@ Please Take Note:
 - For demo purposes SSHis open to all. In production, this should be restricted to a specific IP.
 
 Equivalent HCL Code:
-(from SecurityGroups.tf)
+(from `SecurityGroups.tf`)
 
 ```hcl
 # 2. Security Group
@@ -223,7 +232,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_outbound" {
 Final Step: Launch EC2 Public Instance
 
 Equivalent HCL Code:
-(from public_ec2.tf)
+(from `public_ec2.tf`)
 
 ```hcl
 # 1. EC2 Instance
@@ -242,7 +251,7 @@ resource "aws_instance" "web" {
 }
 ```
 
-Inside of userdata.sh:
+The content of `userdata.sh`:
 
 ```shell
 #!/bin/bash
@@ -263,10 +272,18 @@ To verify if our EC2 Instance is Live,  we can access out public IP Output in an
 
 
 ### 6. Cleanup Instructions
-For our safety and to avoid unexpected charges from our AWS Accout. We sould keep in mind to use terraform destroy to terminate the resources that we recently build.
+For our safety and to avoid unexpected charges from our AWS Accout. We sould keep in mind to use `terraform destroy` to terminate the resources that we recently build.
 ![TerraformDestroy](image/TerraformDestroy.PNG)
 
 This is the end of my Phase 1 project. I hope you appreciate my step by step on building my first terraform project.
+
+📖 Lessons Learned
+
+Importance of network segmentation (public vs private subnets)
+
+Applying least privilege when exposing EC2 to the internet
+
+Understanding how security groups and route tables work together.
 
 ### 7. Future Improvements
 For the next phase of this project. I will deploy the following:

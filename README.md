@@ -1,22 +1,26 @@
 # AWS-VPC-with-Public-Private-Subnets-and-EC2-Deployment
+
+### 1. Project Overview:
 This project provisions an AWS Virtual Private Cloud (VPC) with both **public and private subnets** using Terraform. An **EC2 instance** is deployed in the public subnet and automatically configured with Nginx to serve a simple web page. The private subnet is internet-enabled through a **NAT Gateway** for secure backend services.
 
 Note:
 I will also demonstrate the equivalent AWS Console of each HCL Block to make more sense on how I build a VPC. Please take note that we will start with the Phase 1 architectural diagram to demonstrate the baby steps on how to provision a VPC with a built in security group.
 
-# Architecture
+### 2. Architecture Diagram
 ![Architecture Diagram](image/UpdatedArchitecture.png)
 
+### 3. Technologies Used
 **Components:**
+- **Terraform** for infrastructure as code
 - **VPC** (`10.0.0.0/16`)
-- **Public Subnet** (`10.0.0.0/24`) → EC2 instance
-- **Private Subnet** (`10.0.1.0/24`)
+- **Public Subnet** (`10.0.0.0/24`) → Public EC2 instance
+- **Private Subnet** (`10.0.1.0/24`) → Private EC2 instance
 - **Internet Gateway** for public access
 - **NAT Gateway** for private subnet outbound internet
 - **Security Groups** allowing HTTP(80) & SSH(22)
-- **Terraform** for infrastructure as code
+- **Public EC2 Instance + User Data Automation** for Output Testing
 
-
+### 4. Deployment Instructions
 ## ⚙️ How to Deploy
 ```bash
 # 1️⃣ Initialize Terraform
@@ -70,7 +74,7 @@ Step #1: Create VPC
 ![Create VPC](image/CreateVPC.png)
 
 Equivalent HCL Code: 
-(from main.tf)
+(from VPC.tf)
 ```hcl
 # 1. Create VPC
 resource "aws_vpc" "main" {
@@ -85,7 +89,7 @@ Step #2: Create Public and Private Subnet
 ![Create Public/Private Subnet](image/PrivateSubnet.PNG)
 
 Equivalent HCL Code:
-(from main.tf)
+(from VPC.tf)
 ```hcl
 # 2. Create Public and Private Subnet
 resource "aws_subnet" "public" {
@@ -113,6 +117,7 @@ Step #3: Create Internet Gateway
 ![CreateInternetGateway](image/InternetGateway.png)
 
 Equivalent HCL Code:
+(from VPC.tf)
 ```hcl
 # 3. Create Internet Gateway
 resource "aws_internet_gateway" "igw" {
@@ -156,6 +161,9 @@ resource "aws_route_table_association" "public_assoc" {
 
 Step #5: Create security groups for inbound and outbound traffic control.
 ![SecurityGroup](image/SecurityGroups.PNG)
+
+Please Take Note:
+- For demo purposes SSHis open to all. In production, this should be restricted to a specific IP.
 
 Equivalent HCL Code:
 (from SecurityGroups.tf)
@@ -238,6 +246,7 @@ systemctl enable nginx
 echo "<h1>VPC Portfolio Project Running on EC2</h1>" > /usr/share/nginx/html/index.html
 ```
 
+### 5. Outputs
 Finally, we can now run the terraform apply command in out shell:
 ![ShellOutput](image/ShellOutput.PNG)
 
@@ -245,8 +254,15 @@ To verify if our EC2 Instance is Live,  we can access out public IP Output in an
 ![WebPageTest](image/WebPageTest.PNG)
 
 
+### 6. Cleanup Instructions
 For our safety and to avoid unexpected charges from our AWS Accout. We sould keep in mind to use terraform destroy to terminate the resources that we recently build.
 ![TerraformDestroy](image/TerraformDestroy.PNG)
 
-
 This is the end of my Phase 1 project. I hope you appreciate my step by step on building my first terraform project.
+
+### 7. Future Improvements
+For the next phase of this project. I will deploy the following:
+- Add an RDS database in the private subnet.
+- Use an Application Load Balancer (ALB).
+- Configure Terraform remote backend (S3 + DynamoDB)
+- Deploy using CI/CD (GitHub Actions or CodePipeline.)

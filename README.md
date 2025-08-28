@@ -60,12 +60,19 @@ variable "private_subnet_cidr" {
 }
 
 variable "instance_type" {
+  description = "Small compute resource for testing purposes only."
   default = "t3.small"
+}
+
+variable "ssh_allowed_cidr" {
+  description = "CIDR block allowed to SSH"
+  type = string
+  default = "0.0.0.0/0"
 }
 
 variable "key_name" {
   description = "Existing AWS key pair name for SSH"
-  default     = "T-Windows"  # Put your own .pem file
+  default     = ""  # Put your own .pem file
 }
 ```
 

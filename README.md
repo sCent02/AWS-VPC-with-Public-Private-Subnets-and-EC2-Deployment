@@ -141,10 +141,11 @@ Step #4: Create Public Route Table
 Edit subnet associate and we should associate the public subnet
 ![PublicRTBAssoc](image/PublicRTBAssoc.png)
 
-Edit route and this should include a publoc routing so we can access the virtual machine later on.
+Edit route and this should include a public routing so we can access the virtual machine later on.
 ![PublicRTBRouting](image/PublicRTBRouting.png)
 
 Equivalent HCL Code:
+(from VPC.tf)
 ```hcl
 # 4. Create Public Route Table
 resource "aws_route_table" "public" {

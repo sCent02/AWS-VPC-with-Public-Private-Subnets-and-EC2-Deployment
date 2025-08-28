@@ -1,10 +1,10 @@
 # AWS-VPC-with-Public-Private-Subnets-and-EC2-Deployment
 
 ### 1. Project Overview:
-This project provisions an AWS Virtual Private Cloud (VPC) with both **public and private subnets** using Terraform. An **EC2 instance** is deployed in the public subnet and automatically configured with Nginx to serve a simple web page. The private subnet is internet-enabled through a **NAT Gateway** for secure backend services.
+This project demonstrates how to provision a secure AWS Virtual Private Cloud (VPC) with both **public and private subnets** using Terraform. An **EC2 instance** is deployed in the public subnet and automatically configured with Nginx to serve a simple web page. The private subnet is internet-enabled through a **NAT Gateway** for secure backend services.
 
 Note:
-I will also demonstrate the equivalent AWS Console of each HCL Block to make more sense on how I build a VPC. Please take note that we will start with the Phase 1 architectural diagram to demonstrate the baby steps on how to provision a VPC with a built in security group.
+I will also demonstrate the equivalent AWS Console of each HCL Block to make more sense on how I build a VPC. Please take note that we will start with the Phase 1 architectural diagram to demonstrate the simple steps on how to provision a VPC with a built in security group.
 
 ### 2. Architecture Diagram
 ![Architecture Diagram](image/UpdatedArchitecture.png)

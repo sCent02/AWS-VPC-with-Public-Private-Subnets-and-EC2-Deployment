@@ -1,3 +1,5 @@
+## Comment out first since we do not yet deploy a private EC2 Instance.
+
 /*
 # 5. Create NAT Gateway for Private Subnet
 resource "aws_eip" "nat" {

@@ -273,3 +273,7 @@ For the next phase of this project. I will deploy the following:
 - Use an Application Load Balancer (ALB).
 - Configure Terraform remote backend (S3 + DynamoDB)
 - Deploy using CI/CD (GitHub Actions or CodePipeline.)
+
+
+### What I learn?
+- We learn about the basic deployment of EC2 Instance with Modified VPC and Security Groups by using Infrastructure as Code platform for repeatability purpose in the future and to minimize the risk of error when we need to deploy a cloud infrastructure in the future use.

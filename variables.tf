@@ -27,5 +27,5 @@ variable "ssh_allowed_cidr" {
 
 variable "key_name" {
   description = "Existing AWS key pair name for SSH"
-  default     = ""  # Put your own .pem file
+  default     = "Training_Linux"  # Put your own .pem file
 }

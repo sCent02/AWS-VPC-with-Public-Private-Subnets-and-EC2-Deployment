@@ -11,7 +11,7 @@ resource "aws_security_group" "web_sg" {
 # Updated block of code for best practice purposes
 resource "aws_vpc_security_group_ingress_rule" "allow_ssh" {
   security_group_id = aws_security_group.web_sg.id
-  cidr_ipv4         = aws_vpc.main.cidr_block
+  cidr_ipv4         = var.ssh_allowed_cidr #0.0.0.0/0
   from_port         = 22
   ip_protocol       = "tcp"
   to_port           = 22
